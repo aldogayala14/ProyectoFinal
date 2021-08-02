@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/java/Persistencia/ControladoraPersistencia.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>20</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/web/listaEmpleados.jsp</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/web/cargaEmpleado.jsp</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/web/login.jsp</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/java/Logica/Habitacion.java</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/java/Servlets/SvHabitacion.java</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/java/Logica/Persona.java</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/java/Persistencia/EmpleadoJpaController.java</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/java/Servlets/SvHuesped.java</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/java/Logica/Controladora.java</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/java/Servlets/SvLogin.java</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/java/Servlets/SvLogout.java</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/java/Logica/Huesped.java</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/java/Persistencia/HuespedJpaController.java</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/web/index.jsp</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/conf/persistence.xml</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/java/Logica/Usuario.java</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/java/Logica/Reserva.java</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/java/Persistencia/ControladoraPersistencia.java</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/web/cargaHuesped.jsp</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/java/Logica/Empleado.java</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/web/cargaHabitacion.jsp</file>
+            <file>file:/C:/Users/Aldo/Documents/NetBeansProjects/ProyectoFinal/src/java/Servlets/SvEmpleado.java</file>
+        </group>
+    </open-files>
+</project-private>

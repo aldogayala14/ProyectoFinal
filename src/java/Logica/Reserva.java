@@ -1,59 +1,54 @@
 package Logica;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+@Entity
+public class Reserva implements Serializable {
 
-public class Reserva {
-    
-    private int id_reserva;
-    private Habitacion habitacion;
-    private Huesped huesped;
-    private Empleado empleado;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id_reserva;
+
+    @Temporal(TemporalType.DATE)
     private Date fecha_checkIn;
+    @Temporal(TemporalType.DATE)
     private Date fecha_checkOut;
+
+    @Basic
+    private String observaciones;
 
     public Reserva() {
     }
 
-    public Reserva(int id_reserva, Habitacion habitacion, Huesped huesped, Empleado empleado, Date fecha_checkIn, Date fecha_checkOut) {
+    public Reserva(long id_reserva, String observaciones, Date fecha_checkIn, Date fecha_checkOut) {
         this.id_reserva = id_reserva;
-        this.habitacion = habitacion;
-        this.huesped = huesped;
-        this.empleado = empleado;
+        this.observaciones = observaciones;
         this.fecha_checkIn = fecha_checkIn;
         this.fecha_checkOut = fecha_checkOut;
     }
 
-    public int getId_reserva() {
+    public long getId_reserva() {
         return id_reserva;
     }
 
-    public void setId_reserva(int id_reserva) {
+    public void setId_reserva(long id_reserva) {
         this.id_reserva = id_reserva;
     }
 
-    public Habitacion getHabitacion() {
-        return habitacion;
+    public String getObservaciones() {
+        return observaciones;
     }
 
-    public void setHabitacion(Habitacion habitacion) {
-        this.habitacion = habitacion;
-    }
-
-    public Huesped getHuesped() {
-        return huesped;
-    }
-
-    public void setHuesped(Huesped huesped) {
-        this.huesped = huesped;
-    }
-
-    public Empleado getEmpleado() {
-        return empleado;
-    }
-
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 
     public Date getFecha_checkIn() {
@@ -71,8 +66,5 @@ public class Reserva {
     public void setFecha_checkOut(Date fecha_checkOut) {
         this.fecha_checkOut = fecha_checkOut;
     }
-    
-    
-    
-    
+
 }

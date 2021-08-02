@@ -1,0 +1,13 @@
+.form-group{
+	margin: 0.5rem;
+	padding: 0.5rem;
+}
+
+.boton-guardar{
+	
+	margin: 0 auto;
+}
+
+#layoutAuthentication{
+	background-color: #212529;
+}

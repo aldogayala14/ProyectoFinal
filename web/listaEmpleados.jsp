@@ -1,3 +1,8 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="Logica.Empleado"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.List"%>
 <%@page import="Logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -14,25 +19,23 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
-       
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <!-- Navbar Brand-->
+             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.jsp">GestSys</a>
             <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>  
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>         
             <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    
+            <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">                   
                 </div>
-            </form>
+            </div>
             <!-- Navbar-->
             <ul class="navbar-nav text-right">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                         <li><a class="dropdown-item" href="#!">Usuario : <%=request.getSession().getAttribute("usuario") %></a></li>
-                        <li><a class="dropdown-item" href="SvLogout">Logout</a></li>
+                         <li><a class="dropdown-item" href="#!">Usuario : user</a></li>
+                        <li><a class="dropdown-item" href="#!">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -54,53 +57,13 @@
                                     <a class="nav-link" href="cargaEmpleado.jsp">Nuevo Empleado</a>
                                     <a class="nav-link" href="listaEmpleados.jsp">Lista empleados</a>
                                 </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fa fa-users"></i></div>
-                                Huesped
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="cargaHuesped.jsp">Nuevo Huesped</a>
-                                    <a class="nav-link" href="listaEmpleados.jsp">Lista huespedes</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages2" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fa fa-bed"></i></div>
-                                Habitacion
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapsePages2" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="cargaHabitacion.jsp">Nuevo Habitacion</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages3" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fa fa-calendar"></i></div>
-                                Reserva
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapsePages3" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Nueva Reserva
-                                        <div class="sb-sidenav-collapse-arrow"></div>
-                                    </a>                                    
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                       Lista Reservas
-                                        <div class="sb-sidenav-collapse-arrow"></div>
-                                    </a>
-                                    
-                                </nav>
-                            </div>
-
+                            </div>                            
                             
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logueado como:</div>
-                        <p><%=request.getSession().getAttribute("usuario") %></p>
+                        <div class="small">Logged in as:</div>
+                        Usuario : user
                     </div>
                 </nav>
             </div>
@@ -108,9 +71,40 @@
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Bienvenido</h1>
-                                             
-                        
-                        
+                        <div class="table-responsive">
+                         <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Apellido</th>
+                                            <th>Nombre</th>
+                                            <th>Dni</th>
+                                            <th>Direccion</th>
+                                            <th>Fecha Nac</th>                                          
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% Controladora control = new Controladora();
+                                        List<Empleado> listaEmpleado = control.traerEmpleados(); 
+                                        for(Empleado empleado : listaEmpleado){%> 
+                                        <tr>
+                                            <%String apellido = empleado.getApellido();%>
+                                            <td><%=apellido%></td>
+                                            <%String nombre = empleado.getNombre();%>
+                                            <td><%=nombre%></td>
+                                            <%String dni = empleado.getDni();%>
+                                            <td><%=dni%></td>
+                                            <%String direccion = empleado.getDireccion();%>
+                                            <td><%=direccion%></td>
+                                            <%  String pattern = "dd/MM/yyyy";
+                                                DateFormat df = new SimpleDateFormat(pattern);
+                                                String fecha = df.format(empleado.getFechaNac());%>
+                                            <td><%=fecha%></td>
+                                        </tr>
+                                    </tbody>
+                                    <%}; %>
+                                </table> 
+                        </div>                   
+                         
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
@@ -127,6 +121,7 @@
                 </footer>
             </div>
         </div>
+        <script type="text/javascript" src="js/app.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
@@ -134,6 +129,6 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
-        
     </body>
 </html>
+
