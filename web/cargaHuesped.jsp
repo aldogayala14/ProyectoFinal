@@ -66,28 +66,28 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Bienvenido</h1>
                                              
-                         <form action="SvHuesped" method="POST">
-                              <div class="form-group">
+                         <form action="SvHuesped" method="POST" class="row g-3">
+                              <div class="col-md-6">
                                 <label for="nombre_huesped">Nombre</label>
                                 <input type="text"  class="form-control" name="nombre_huesped" id="nombre_huesped" placeholder="Ingrese nombre" maxlength="35" required>           
                               </div>
-                              <div class="form-group">
+                              <div class="col-md-6">
                                 <label for="apellido_huesped">Apellido</label>
                                 <input type="text" class="form-control" name="apellido_huesped" id="apellido_huesped" placeholder="Ingrese apellido" maxlength="35" required>
                               </div> 
-                              <div class="form-group">
+                              <div class="col-md-6">
                                 <label for="dni_huesped">DNI</label>
                                 <input type="number" class="form-control" name="dni_huesped" id="dni_huesped" placeholder="Ingrese DNI" min="10000" max="100000000" required>
                               </div>
-                              <div class="form-group">
+                              <div class="col-md-6">
                                 <label for="direccion_huesped">Direccion</label>
                                 <input type="text" class="form-control" name="direccion_huesped" id="direccion_huesped" placeholder="Ingrese direccion" maxlength="30" required>
                               </div>  
-                              <div class="form-group">
+                              <div class="col-md-6">
                                 <label for="fechaNac_huesped">Fecha Nacimiento</label>
                                 <input type="date" class="form-control" name="fechaNac_huesped" id="fechaNac_huesped" placeholder="Ingrese fecha nacimiento" required>
                               </div>
-                              <div class="form-group">
+                              <div class="col-md-6">
                                 <label for="profesion_huesped">Profesion</label>
                                 <input type="text" class="form-control" name="profesion_huesped" id="profesion_huesped" placeholder="Ingrese profesion del huesped" maxlength="20" required>
                               </div>  

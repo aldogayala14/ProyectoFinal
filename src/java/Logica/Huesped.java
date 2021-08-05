@@ -13,7 +13,7 @@ public class Huesped extends Persona implements Serializable {
     @Basic
     private String profesion;
 
-    @OneToMany
+    @OneToMany(targetEntity=Reserva.class) 
     private List<Reserva> listaReservas;
 
     public Huesped() {

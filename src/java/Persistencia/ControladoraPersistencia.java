@@ -4,6 +4,7 @@ import Logica.Empleado;
 import Logica.Habitacion;
 import Logica.Huesped;
 import Logica.Usuario;
+import Persistencia.exceptions.NonexistentEntityException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,6 +61,91 @@ public class ControladoraPersistencia {
         listaUsuarios = usuarioJpa.findUsuarioEntities();
         return listaUsuarios;
     }
+    
+      public List<Huesped> traerHuespedes() {
+        List<Huesped> listaHuespedes;
+        listaHuespedes = huespedJpa.findHuespedEntities();
+        return listaHuespedes;
+    }
+      
+        public List<Habitacion> traerHabitaciones() {
+        List<Habitacion> listaHabitaciones;
+        listaHabitaciones = habitacionJpa.findHabitacionEntities();
+        return listaHabitaciones;
+        }
+
+  
+
+    public void borrarEmpleado(long id) {
+        try {
+            empleadoJpa.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public void borrarHuesped(long id) {
+        try {
+            huespedJpa.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void borrarHabitaciones(long id) {
+        try {
+            habitacionJpa.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Empleado buscarEmpleado(long id) {
+       return empleadoJpa.findEmpleado(id);
+    }
+    
+      public Huesped buscarHuesped(long id) {
+        return huespedJpa.findHuesped(id);
+    }
+      
+       public Habitacion buscarHabitacion(long id) {
+       return habitacionJpa.findHabitacion(id);
+    }
+
+
+
+    public void modificarEmpleado(Empleado empleado) {
+        try {
+            empleadoJpa.edit(empleado);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void modificarHuesped(Huesped huesped) {
+        try {
+            huespedJpa.edit(huesped);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void modificarHabitacion(Habitacion habitacion) {
+        
+        try {
+            habitacionJpa.edit(habitacion);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }
+   
+    
+
+  
+
+  
 
    
 

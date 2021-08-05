@@ -63,7 +63,7 @@
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                  <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="cargaHuesped.jsp">Nuevo Huesped</a>
-                                    <a class="nav-link" href="listaEmpleados.jsp">Lista huespedes</a>
+                                    <a class="nav-link" href="listaHuespedes.jsp">Lista huespedes</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages2" aria-expanded="false" aria-controls="collapsePages">
@@ -74,6 +74,7 @@
                             <div class="collapse" id="collapsePages2" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="cargaHabitacion.jsp">Nuevo Habitacion</a>
+                                    <a class="nav-link" href="listaHabitaciones.jsp">Lista Habitaciones</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages3" aria-expanded="false" aria-controls="collapsePages">
@@ -106,10 +107,10 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">Bienvenido</h1>
-                                             
-                        
+                    <div class="container-fluid px-4">                                           
+                        <div class="contenedor"> 
+                           <img src="assets/img/hotel.jpg" class="img-fluid" alt="Imagen de fondo">                                                                         
+                        </div>
                         
                     </div>
                 </main>

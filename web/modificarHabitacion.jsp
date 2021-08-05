@@ -1,3 +1,5 @@
+<%@page import="Logica.Habitacion"%>
+<%@page import="Logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -66,39 +68,60 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Bienvenido</h1>
                                              
-                         <form action="SvHabitacion" method="POST" class="row g-3">
+                         <form action="SvModificarHabitacion" method="GET" class="row g-3">
+                              <% HttpSession miSession = request.getSession();
+                             Controladora control = new Controladora();
+                                Habitacion habitacion = (Habitacion) miSession.getAttribute("habitacion");
+                                {%>
                               <div class="col-md-6">
                                 <label for="numero_piso">Numero de Piso</label>
-                                <input type="number"  class="form-control" name="numero_piso" id="numero_piso" placeholder="Ingrese numero de piso" max="15" required>           
+                                <input type="number"  class="form-control" name="numero_piso" id="numero_piso" placeholder="Ingrese numero de piso" max="15" value="<%=habitacion.getPiso()%>" required>           
                               </div>
                               <div class="col-md-6">
                                 <label for="tipo_tematica">Tipo tematica</label>
-                                <input type="text" class="form-control" name="tipo_tematica" id="tipo_tematica" placeholder="Ingrese tematica de habitacion" maxlength="35" required>
+                                <input type="text" class="form-control" name="tipo_tematica" id="tipo_tematica" placeholder="Ingrese tematica de habitacion" maxlength="35" value="<%=habitacion.getTipoTematica()%>" required>
                               </div> 
                               <div class="col-md-6">
                                 <label for="precio_noche">Precio por noche</label>
-                                <input type="number" class="form-control" name="precio_noche" id="precio_noche" placeholder="Ingrese precio por noche" min="1" max="1000000" required>
+                                <input type="number" class="form-control" name="precio_noche" id="precio_noche" placeholder="Ingrese precio por noche" min="1" max="1000000" value="<%=habitacion.getPrecioNoche()%>" required>
                               </div>
                                <div class="col-md-6">
                                 <label for="cantidad_personas">Cantidad Personas</label>
-                                <input type="number" class="form-control" name="cantidad_personas" id="cantidad_personas" placeholder="Ingrese cantidad de personas" max="8" required>
+                                <input type="number" class="form-control" name="cantidad_personas" id="cantidad_personas" placeholder="Ingrese cantidad de personas" max="8" value="<%=habitacion.getCantPersonas()%>" required>
                               </div>    
-                              <div class="col-12">
+                              <div class="col-12">                                 
                                 <label for="tipo_habitacion">Tipo Habitacion</label>
                                 <select name="tipo_habitacion" id="tipo_habitacion" required>
-                                     <option value="none" selected disabled hidden>
-                                        Seleccione una opcion
-                                     </option>
-                                      <option value="single">Single</option>
-                                      <option value="doble">Doble</option>
-                                      <option value="triple">Triple</option>
-                                      <option value="multiple">Multiple</option>
+                                      <option value="single" 
+                                              <%if(habitacion.getTipoHabitacion().equals("single"))
+                                      {%> selected 
+                                      <%}%>
+                                      >Single</option>
+                                      <option value="doble"
+                                              <%if(habitacion.getTipoHabitacion().equals("doble"))
+                                      {%> selected 
+                                      <%}%>
+                                      >Doble</option>
+                                      <option value="triple"
+                                              <%if(habitacion.getTipoHabitacion().equals("triple"))
+                                      {%> selected 
+                                      <%}%>
+                                      >Triple</option>
+                                      <option value="multiple"
+                                              <%if(habitacion.getTipoHabitacion().equals("multiple"))
+                                      {%> selected 
+                                      <%}%>
+                                      >Multiple</option>
                                 </select>
                               </div>                                                         
                               <br> 
+                              <div class="col-12">
+                                <input type="hidden" name="id_habitacion" value="<%=habitacion.getId_habitacion()%>"
+                              </div>
                               <div class="col text-center">       
                               <button type="submit" class="btn btn-primary btn-guardar">Guardar</button>
                               </div>
+                              <%}%>
                          </form>
                         
                     </div>

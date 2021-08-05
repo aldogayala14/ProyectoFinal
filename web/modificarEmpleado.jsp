@@ -1,3 +1,5 @@
+<%@page import="Logica.Controladora"%>
+<%@page import="Logica.Empleado"%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -42,14 +44,14 @@
                             
                             
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fa fa-bed"></i></div>
-                                Habitacion
+                                <div class="sb-nav-link-icon"><i class="fa fa-user"></i></div>
+                                Empleado
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="cargaHabitacion.jsp">Nueva Habitacion</a> 
-                                    <a class="nav-link" href="listaHabitaciones.jsp">Lista Habitaciones</a>
+                                    <a class="nav-link" href="cargaEmpleado.jsp">Nuevo Empleado</a>
+                                    <a class="nav-link" href="layout-sidenav-light.html">Lista empleados</a>
                                 </nav>
                             </div>                            
                             
@@ -64,42 +66,47 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Bienvenido</h1>
+                        <h2 class="mt-4">Carga Empleados</h2>
                                              
-                         <form action="SvHabitacion" method="POST" class="row g-3">
+                         <form action="SvModificarEmpleado" method="GET" class="row g-3">
+                             <% HttpSession miSession = request.getSession();
+                             Controladora control = new Controladora();
+                                Empleado empleado = (Empleado) miSession.getAttribute("empleado");
+                                {%>
                               <div class="col-md-6">
-                                <label for="numero_piso">Numero de Piso</label>
-                                <input type="number"  class="form-control" name="numero_piso" id="numero_piso" placeholder="Ingrese numero de piso" max="15" required>           
+                                <label for="nombre_empleado">Nombre</label>
+                                <input type="text"  class="form-control" name="nombre_empleado" id="nombre_empleado" placeholder="Ingrese nombre" maxlength="35" value="<%=empleado.getNombre()%>" required>           
                               </div>
                               <div class="col-md-6">
-                                <label for="tipo_tematica">Tipo tematica</label>
-                                <input type="text" class="form-control" name="tipo_tematica" id="tipo_tematica" placeholder="Ingrese tematica de habitacion" maxlength="35" required>
+                                <label for="apellido_empleado">Apellido</label>
+                                <input type="text" class="form-control" name="apellido_empleado" id="apellido_empleado" placeholder="Ingrese apellido" maxlength="35" value="<%=empleado.getApellido()%>" required>
                               </div> 
                               <div class="col-md-6">
-                                <label for="precio_noche">Precio por noche</label>
-                                <input type="number" class="form-control" name="precio_noche" id="precio_noche" placeholder="Ingrese precio por noche" min="1" max="1000000" required>
+                                <label for="dni_empleado">DNI</label>
+                                <input type="number" class="form-control" name="dni_empleado" id="dni_empleado" placeholder="Ingrese DNI" min="10000" max="100000000" value="<%=empleado.getDni()%>"required>
                               </div>
-                               <div class="col-md-6">
-                                <label for="cantidad_personas">Cantidad Personas</label>
-                                <input type="number" class="form-control" name="cantidad_personas" id="cantidad_personas" placeholder="Ingrese cantidad de personas" max="8" required>
-                              </div>    
+                              <div class="col-md-6">
+                                <label for="direccion_empleado">Direccion</label>
+                                <input type="text" class="form-control" name="direccion_empleado" id="direccion_empleado" placeholder="Ingrese direccion" maxlength="30"  value="<%=empleado.getDireccion()%>" required>
+                              </div>  
+                              <div class="col-md-6">
+                                <label for="fechaNac_empleado">Fecha Nacimiento</label>
+                                <input type="date" class="form-control" name="fechaNac_empleado" id="fechaNac_empleado" placeholder="Ingrese fecha nacimiento" value="<%=control.convertDateToStringCalendar(empleado.getFechaNac())%>" required>
+                              </div>
+                              <div class="col-md-6">
+                                <label for="cargo_empleado">Cargo</label>
+                                <input type="text" class="form-control" name="cargo_empleado" id="cargo_empleado" placeholder="Ingrese cargo del empleado" maxlength="20"  value="<%=empleado.getCargo()%>"required>
+                              </div>   
                               <div class="col-12">
-                                <label for="tipo_habitacion">Tipo Habitacion</label>
-                                <select name="tipo_habitacion" id="tipo_habitacion" required>
-                                     <option value="none" selected disabled hidden>
-                                        Seleccione una opcion
-                                     </option>
-                                      <option value="single">Single</option>
-                                      <option value="doble">Doble</option>
-                                      <option value="triple">Triple</option>
-                                      <option value="multiple">Multiple</option>
-                                </select>
-                              </div>                                                         
-                              <br> 
-                              <div class="col text-center">       
-                              <button type="submit" class="btn btn-primary btn-guardar">Guardar</button>
+                                <input type="hidden" name="id_empleado" value="<%=empleado.getId_persona()%>"
+                              </div>                             
+                              <div class="col-12 text-center">       
+                              <button type="submit" class="btn btn-primary btn-guardar">Modificar</button>
                               </div>
+                              <%}%>
                          </form>
+
+                         
                         
                     </div>
                 </main>
@@ -127,4 +134,3 @@
         <script src="js/datatables-simple-demo.js"></script>
     </body>
 </html>
-

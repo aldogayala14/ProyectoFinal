@@ -1,3 +1,8 @@
+<%@page import="Logica.Habitacion"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.List"%>
+<%@page import="Logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -42,14 +47,14 @@
                             
                             
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fa fa-bed"></i></div>
-                                Habitacion
+                                <div class="sb-nav-link-icon"><i class="fa fa-user"></i></div>
+                               Habitacion
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="cargaHabitacion.jsp">Nueva Habitacion</a> 
-                                    <a class="nav-link" href="listaHabitaciones.jsp">Lista Habitaciones</a>
+                                    <a class="nav-link" href="cargaHabitacion.jsp">Nueva Habitacion</a>
+                                    <a class="nav-link" href="listaHabitaciones.jsp">Lista habitaciones</a>
                                 </nav>
                             </div>                            
                             
@@ -63,44 +68,54 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">Bienvenido</h1>
-                                             
-                         <form action="SvHabitacion" method="POST" class="row g-3">
-                              <div class="col-md-6">
-                                <label for="numero_piso">Numero de Piso</label>
-                                <input type="number"  class="form-control" name="numero_piso" id="numero_piso" placeholder="Ingrese numero de piso" max="15" required>           
-                              </div>
-                              <div class="col-md-6">
-                                <label for="tipo_tematica">Tipo tematica</label>
-                                <input type="text" class="form-control" name="tipo_tematica" id="tipo_tematica" placeholder="Ingrese tematica de habitacion" maxlength="35" required>
-                              </div> 
-                              <div class="col-md-6">
-                                <label for="precio_noche">Precio por noche</label>
-                                <input type="number" class="form-control" name="precio_noche" id="precio_noche" placeholder="Ingrese precio por noche" min="1" max="1000000" required>
-                              </div>
-                               <div class="col-md-6">
-                                <label for="cantidad_personas">Cantidad Personas</label>
-                                <input type="number" class="form-control" name="cantidad_personas" id="cantidad_personas" placeholder="Ingrese cantidad de personas" max="8" required>
-                              </div>    
-                              <div class="col-12">
-                                <label for="tipo_habitacion">Tipo Habitacion</label>
-                                <select name="tipo_habitacion" id="tipo_habitacion" required>
-                                     <option value="none" selected disabled hidden>
-                                        Seleccione una opcion
-                                     </option>
-                                      <option value="single">Single</option>
-                                      <option value="doble">Doble</option>
-                                      <option value="triple">Triple</option>
-                                      <option value="multiple">Multiple</option>
-                                </select>
-                              </div>                                                         
-                              <br> 
-                              <div class="col text-center">       
-                              <button type="submit" class="btn btn-primary btn-guardar">Guardar</button>
-                              </div>
-                         </form>
-                        
+                    <div class="container-fluid">                        
+                        <div class="table-responsive">
+                         <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Nº Piso</th>
+                                            <th>Tipo tematica</th>
+                                            <th>Tipo Habitacion</th>
+                                            <th>Cant personas</th>
+                                            <th>Precio por noche</th> 
+                                            <th>Eliminar</th>
+                                            <th>Modificar</th>                                         
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% Controladora control = new Controladora();
+                                        List<Habitacion> listaHabitaciones = control.traerHabitaciones(); 
+                                        for(Habitacion habitacion : listaHabitaciones){%> 
+                                        <tr>
+                                            <%int piso = habitacion.getPiso();%>
+                                            <td><%=piso%></td>
+                                            <%String tipoTematica = habitacion.getTipoTematica();%>
+                                            <td><%=tipoTematica%></td>
+                                            <%String tipoHabitacion = habitacion.getTipoHabitacion();%>
+                                            <td><%=tipoHabitacion%></td>
+                                            <%int cantidadPer = habitacion.getCantPersonas();%>
+                                            <td><%=cantidadPer%></td>
+                                            <%double precioPorNoche = habitacion.getPrecioNoche();%>
+                                            <td><%=precioPorNoche%></td>
+                                             <%long id = habitacion.getId_habitacion();%>
+                                            <td>
+                                                <form name="formBorrarHabitacion" action="SvEliminarHabitacion" method="POST">
+                                                <input type="hidden" name="id_habitacion" value="<%=id%>">
+                                                <button type="submit" class="btn btn-danger" name="eliminar">Eliminar</button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form name="formModificarHabitacion" action="SvModificarHabitacion" method="POST">
+                                                <input type="hidden" name="id_habitacion" value="<%=id%>">
+                                                <button type="submit" class="btn btn-success" name="modficar">Modificar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <%}; %>
+                                </table> 
+                        </div>                   
+                         
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">

@@ -1,3 +1,5 @@
+<%@page import="Logica.Huesped"%>
+<%@page import="Logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -42,14 +44,14 @@
                             
                             
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fa fa-bed"></i></div>
-                                Habitacion
+                                <div class="sb-nav-link-icon"><i class="fa fa-user"></i></div>
+                                Huesped
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="cargaHabitacion.jsp">Nueva Habitacion</a> 
-                                    <a class="nav-link" href="listaHabitaciones.jsp">Lista Habitaciones</a>
+                                    <a class="nav-link" href="cargaHuesped.jsp">Nuevo Huesped</a>
+                                    <a class="nav-link" href="listaHuespedes.jsp">Lista huespedes</a>
                                 </nav>
                             </div>                            
                             
@@ -66,39 +68,43 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Bienvenido</h1>
                                              
-                         <form action="SvHabitacion" method="POST" class="row g-3">
+                         <form action="SvModificarHuesped" method="GET" class="row g-3">
+                              <% HttpSession miSession = request.getSession();
+                             Controladora control = new Controladora();
+                                Huesped huesped = (Huesped) miSession.getAttribute("huesped");
+                                {%>
                               <div class="col-md-6">
-                                <label for="numero_piso">Numero de Piso</label>
-                                <input type="number"  class="form-control" name="numero_piso" id="numero_piso" placeholder="Ingrese numero de piso" max="15" required>           
+                                <label for="nombre_huesped">Nombre</label>
+                                <input type="text"  class="form-control" name="nombre_huesped" id="nombre_huesped" placeholder="Ingrese nombre" maxlength="35" value="<%=huesped.getNombre()%>" required>           
                               </div>
                               <div class="col-md-6">
-                                <label for="tipo_tematica">Tipo tematica</label>
-                                <input type="text" class="form-control" name="tipo_tematica" id="tipo_tematica" placeholder="Ingrese tematica de habitacion" maxlength="35" required>
+                                <label for="apellido_huesped">Apellido</label>
+                                <input type="text" class="form-control" name="apellido_huesped" id="apellido_huesped" placeholder="Ingrese apellido" maxlength="35" value="<%=huesped.getApellido()%>"required>
                               </div> 
                               <div class="col-md-6">
-                                <label for="precio_noche">Precio por noche</label>
-                                <input type="number" class="form-control" name="precio_noche" id="precio_noche" placeholder="Ingrese precio por noche" min="1" max="1000000" required>
+                                <label for="dni_huesped">DNI</label>
+                                <input type="number" class="form-control" name="dni_huesped" id="dni_huesped" placeholder="Ingrese DNI" min="10000" max="100000000" value="<%=huesped.getDni()%>" required>
                               </div>
-                               <div class="col-md-6">
-                                <label for="cantidad_personas">Cantidad Personas</label>
-                                <input type="number" class="form-control" name="cantidad_personas" id="cantidad_personas" placeholder="Ingrese cantidad de personas" max="8" required>
-                              </div>    
-                              <div class="col-12">
-                                <label for="tipo_habitacion">Tipo Habitacion</label>
-                                <select name="tipo_habitacion" id="tipo_habitacion" required>
-                                     <option value="none" selected disabled hidden>
-                                        Seleccione una opcion
-                                     </option>
-                                      <option value="single">Single</option>
-                                      <option value="doble">Doble</option>
-                                      <option value="triple">Triple</option>
-                                      <option value="multiple">Multiple</option>
-                                </select>
-                              </div>                                                         
+                              <div class="col-md-6">
+                                <label for="direccion_huesped">Direccion</label>
+                                <input type="text" class="form-control" name="direccion_huesped" id="direccion_huesped" placeholder="Ingrese direccion" maxlength="30" value="<%=huesped.getDireccion()%>" required>
+                              </div>  
+                              <div class="col-md-6">
+                                <label for="fechaNac_huesped">Fecha Nacimiento</label>
+                                <input type="date" class="form-control" name="fechaNac_huesped" id="fechaNac_huesped" placeholder="Ingrese fecha nacimiento" value="<%=control.convertDateToStringCalendar(huesped.getFechaNac())%>" required>
+                              </div>
+                              <div class="col-md-6">
+                                <label for="profesion_huesped">Profesion</label>
+                                <input type="text" class="form-control" name="profesion_huesped" id="profesion_huesped" placeholder="Ingrese profesion del huesped" maxlength="20" value="<%=huesped.getProfesion()%>" required>
+                              </div>  
                               <br> 
-                              <div class="col text-center">       
-                              <button type="submit" class="btn btn-primary btn-guardar">Guardar</button>
+                               <div class="col-12">
+                                <input type="hidden" name="id_huesped" value="<%=huesped.getId_persona()%>"
                               </div>
+                              <div class="col text-center">       
+                              <button type="submit" class="btn btn-primary btn-guardar">Modificar</button>
+                              </div>
+                               <%}%>
                          </form>
                         
                     </div>
@@ -127,4 +133,3 @@
         <script src="js/datatables-simple-demo.js"></script>
     </body>
 </html>
-

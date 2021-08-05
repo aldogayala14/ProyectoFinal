@@ -2,7 +2,6 @@
 <%@page import="java.text.DateFormat"%>
 <%@page import="Logica.Empleado"%>
 <%@page import="java.util.List"%>
-<%@page import="java.util.List"%>
 <%@page import="Logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -69,8 +68,7 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">Bienvenido</h1>
+                    <div class="container-fluid">                        
                         <div class="table-responsive">
                          <table class="table table-hover">
                                     <thead>
@@ -79,7 +77,9 @@
                                             <th>Nombre</th>
                                             <th>Dni</th>
                                             <th>Direccion</th>
-                                            <th>Fecha Nac</th>                                          
+                                            <th>Fecha Nac</th> 
+                                            <th>Eliminar</th>
+                                            <th>Modificar</th>                                         
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -95,10 +95,21 @@
                                             <td><%=dni%></td>
                                             <%String direccion = empleado.getDireccion();%>
                                             <td><%=direccion%></td>
-                                            <%  String pattern = "dd/MM/yyyy";
-                                                DateFormat df = new SimpleDateFormat(pattern);
-                                                String fecha = df.format(empleado.getFechaNac());%>
+                                            <%  String fecha = control.convertDateToString(empleado.getFechaNac());%>
                                             <td><%=fecha%></td>
+                                             <%long id = empleado.getId_persona();%>
+                                            <td>
+                                                <form name="formBorrarEmpleado" action="SvEliminarEmpleado" method="POST">
+                                                <input type="hidden" name="id_empleado" value="<%=id%>">
+                                                <button type="submit" class="btn btn-danger" name="eliminar">Eliminar</button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form name="formModificarEmpleado" action="SvModificarEmpleado" method="POST">
+                                                <input type="hidden" name="id_empleado" value="<%=id%>">
+                                                <button type="submit" class="btn btn-success" name="modficar">Modificar</button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     </tbody>
                                     <%}; %>
