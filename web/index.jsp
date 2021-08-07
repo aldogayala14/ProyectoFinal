@@ -7,17 +7,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>GestSys</title>
+        <title>RSVATION</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="css/estilos.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
+        <!--Verifica si existe una sesion-->
+       <%  HttpSession mi_session = request.getSession();
+          //Aca compruebo que exista un usuario que haya iniciado sesion, sino voy al login
+          String usuario = (String) mi_session.getAttribute("usuario");
+          if(usuario == null){
+              response.sendRedirect("login.jsp");
+          }else{
+             
+           %>
        
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.jsp">GestSys</a>
+            <a class="navbar-brand ps-3" href="index.jsp">RSVATION</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>  
             <!-- Navbar Search-->
@@ -27,11 +36,12 @@
                 </div>
             </form>
             <!-- Navbar-->
-            <ul class="navbar-nav text-right">
+           <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                         <li><a class="dropdown-item" href="#!">Usuario : <%=request.getSession().getAttribute("usuario") %></a></li>
+                        <li><a class="dropdown-item" href="#!"><%=request.getSession().getAttribute("usuario") %></a></li>                        
+                        <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="SvLogout">Logout</a></li>
                     </ul>
                 </li>
@@ -83,16 +93,11 @@
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapsePages3" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Nueva Reserva
-                                        <div class="sb-sidenav-collapse-arrow"></div>
-                                    </a>                                    
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                       Lista Reservas
-                                        <div class="sb-sidenav-collapse-arrow"></div>
-                                    </a>
-                                    
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="cargaReserva.jsp">Nuevo Reserva</a>
+                                    <a class="nav-link" href="listaReservas.jsp">Lista Reservas</a>
+                                    <a class="nav-link" href="listaDeterminadoDia.jsp">Lista por empleado</a>
+                                    <a class="nav-link" href="listaDeterminadoDia.jsp">Lista huesped periodo</a>
                                 </nav>
                             </div>
 
@@ -109,7 +114,7 @@
                 <main>
                     <div class="container-fluid px-4">                                           
                         <div class="contenedor"> 
-                           <img src="assets/img/hotel.jpg" class="img-fluid" alt="Imagen de fondo">                                                                         
+                           <img src="assets/img/fondo.jpg" class="img-fluid" alt="Imagen de fondo">                                                                         
                         </div>
                         
                     </div>
@@ -117,12 +122,7 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
+                            <div class="text-muted">Copyright &copy; RSVATION 2021</div>                            
                         </div>
                     </div>
                 </footer>
@@ -135,6 +135,6 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
-        
+        <%}%>
     </body>
 </html>

@@ -32,19 +32,19 @@ public class SvModificarHabitacion extends HttpServlet {
          
         long id = Long.parseLong(request.getParameter("id_habitacion"));
         
+        int numeroHabitacion =Integer.parseInt(request.getParameter("numero_habitacion"));
         int numeroPiso =Integer.parseInt(request.getParameter("numero_piso"));
         String tipoTematica=request.getParameter("tipo_tematica");
-        String tipoHabitacion =  request.getParameter("tipo_habitacion");
-        int cantPersonas = Integer.parseInt(request.getParameter("cantidad_personas"));
+        String tipoHabitacion =  request.getParameter("tipo_habitacion");       
         double precioNoche = Double.parseDouble(request.getParameter("precio_noche"));
        
         
                 
         //traigo la sesion y asigno los atributos para abrir en caulquier JSP
+        request.getSession().setAttribute("numero_habitacion", numeroHabitacion);
         request.getSession().setAttribute("numero_piso", numeroPiso);
         request.getSession().setAttribute("tipo_tematica", tipoTematica);
-        request.getSession().setAttribute("tipo_habitacion", tipoHabitacion);
-        request.getSession().setAttribute("cantidad_personas", cantPersonas);
+        request.getSession().setAttribute("tipo_habitacion", tipoHabitacion);        
         request.getSession().setAttribute("precio_noche", precioNoche);
         
         
@@ -52,10 +52,10 @@ public class SvModificarHabitacion extends HttpServlet {
         Controladora control = new Controladora();   
         
        Habitacion habitacion = control.buscarHabitacion(id);
+       habitacion.setNumero_habitacion(numeroHabitacion);
        habitacion.setPiso(numeroPiso);
        habitacion.setTipoTematica(tipoTematica);
-       habitacion.setTipoHabitacion(tipoHabitacion);
-       habitacion.setCantPersonas(cantPersonas);
+       habitacion.setTipoHabitacion(tipoHabitacion);      
        habitacion.setPrecioNoche(precioNoche);
         
         

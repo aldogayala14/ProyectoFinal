@@ -1,7 +1,8 @@
-<%@page import="Logica.Habitacion"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.text.DateFormat"%>
 <%@page import="java.util.List"%>
+<%@page import="Logica.Usuario"%>
+<%@page import="Logica.Habitacion"%>
+<%@page import="Logica.Huesped"%>
+<%@page import="Logica.Empleado"%>
 <%@page import="Logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -18,6 +19,17 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
+        <%HttpSession mi_session = request.getSession();
+          //Aca compruebo que exista un usuario que haya iniciado sesion, sino voy al login
+          String usuario = (String) mi_session.getAttribute("usuario");
+         
+         
+          Controladora control = new Controladora();
+          if(usuario == null){
+              response.sendRedirect("login.jsp");
+          }else{
+             
+           %>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
              <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.jsp">GestSys</a>
@@ -48,13 +60,13 @@
                             
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fa fa-user"></i></div>
-                               Habitacion
+                               Reserva
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="cargaHabitacion.jsp">Nueva Habitacion</a>
-                                    <a class="nav-link" href="listaHabitaciones.jsp">Lista habitaciones</a>
+                                    <a class="nav-link" href="cargaReserva.jsp">Nueva Reserva</a>
+                                    <a class="nav-link" href="layout-sidenav-light.html">Lista empleados</a>
                                 </nav>
                             </div>                            
                             
@@ -68,9 +80,38 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid">                        
-                        <div class="table-responsive">
-                         <table class="table table-hover">
+                    <div class="container-fluid px-4">
+                        <h2 class="mt-4">Nueva Reserva/Habitacion</h2>
+                             <%
+                                       List<Empleado> listaEmpleados = control.traerEmpleados(); 
+                                       String nombreEmpleado="";                                      
+                                        for(Empleado empleado : listaEmpleados){
+                                            if(empleado.getUsuario().getNombre().equals(usuario)){
+                                                nombreEmpleado = empleado.getApellido() + " " + empleado.getNombre();
+                                               
+                                            }
+                                        
+                                           
+                             %>
+                         <div class="row g-3">                            
+                              <div class="col-md-6">                                                            
+                                <label for="usario_empleado">Reserva realizada por el usuario</label>
+                                <input type="text"  class="form-control" name="usuario_empleado" id="usario_empleado" placeholder="Nombre usuario" value="<%=request.getSession().getAttribute("usuario")%>"readonly>           
+                              </div>
+                              <div class="col-md-6">
+                                <label for="nombre_empleado">Empleado</label>
+                                <input type="text" class="form-control" name="nombre_empleado" id="nombre_empleado" placeholder="Nombre empleado" value="<%=nombreEmpleado%>" readonly>
+                              </div> 
+                              <div  action="SvModificarHuesped" method="GET" class="col-md-6">
+                                  <div class="col-auto">
+                                    <label for="searchTerm" class="visually-hidden">Habitacion</label>
+                                    <input type="text" class="form-control" id="searchTerm" placeholder="Buscar habitacion" onkeyup="doSearch()">
+                                  </div>  
+                              </div>
+                         </div>
+                              <% }%>
+                                 <div class="table-responsive">
+                         <table id="datos" class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>Nº Habitacion</th>
@@ -78,12 +119,11 @@
                                             <th>Tipo tematica</th>
                                             <th>Tipo Habitacion</th>                                            
                                             <th>Precio por noche</th> 
-                                            <th>Eliminar</th>
-                                            <th>Modificar</th>                                         
+                                            <th>Seleccion</th>                                                                                    
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% Controladora control = new Controladora();
+                                        <%
                                         List<Habitacion> listaHabitaciones = control.traerHabitaciones(); 
                                         for(Habitacion habitacion : listaHabitaciones){%> 
                                         <tr>
@@ -99,23 +139,23 @@
                                             <td><%=precioPorNoche%></td>
                                              <%long id = habitacion.getId_habitacion();%>
                                             <td>
-                                                <form name="formBorrarHabitacion" action="SvEliminarHabitacion" method="POST">
-                                                <input type="hidden" name="id_habitacion" value="<%=id%>">
-                                                <button type="submit" class="btn btn-danger" name="eliminar">Eliminar</button>
-                                                </form>
-                                            </td>
-                                            <td>
-                                                <form name="formModificarHabitacion" action="SvModificarHabitacion" method="POST">
-                                                <input type="hidden" name="id_habitacion" value="<%=id%>">
-                                                <button type="submit" class="btn btn-success" name="modficar">Modificar</button>
-                                                </form>
-                                            </td>
+                                                 
+                                                <form name="formReservaHuesped" action="SvReserva" method="GET">                                                    
+                                                <input type="text" name="id_habitacionReservaConfirm" value="<%=id%>">
+                                                <% String idReservaHab = (String) mi_session.getAttribute("id_huespedReservaHab");%>
+                                                <input type="text" name="id_huespedReservaConfirm" value="<%=idReservaHab%>">
+                                                <% String idEmpleadoRes = (String) mi_session.getAttribute("id_empleadoReservaHab");%>
+                                                <input type="text" name="id_empleadoReservaConfirm" value="<%=idEmpleadoRes%>">
+                                                <button type="submit" class="btn btn-success" name="reservaHuesped">Seleccionar</button>
+                                                </form>                                                
+                                            </td>     
+                                            
                                         </tr>
                                     </tbody>
                                     <%}; %>
                                 </table> 
-                        </div>                   
-                         
+                        </div>  
+                                 
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
@@ -132,6 +172,7 @@
                 </footer>
             </div>
         </div>
+                                
         <script type="text/javascript" src="js/app.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
@@ -140,6 +181,6 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <%}%>
     </body>
 </html>
-

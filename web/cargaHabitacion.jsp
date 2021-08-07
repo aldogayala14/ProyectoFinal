@@ -67,6 +67,10 @@
                         <h1 class="mt-4">Bienvenido</h1>
                                              
                          <form action="SvHabitacion" method="POST" class="row g-3">
+                             <div class="col-md-6">
+                                <label for="numero_habitacion">Numero de Habitacion</label>
+                                <input type="number"  class="form-control" name="numero_habitacion" id="numero_habitacion" placeholder="Ingrese numero habitacion" max="10000" required>           
+                              </div>
                               <div class="col-md-6">
                                 <label for="numero_piso">Numero de Piso</label>
                                 <input type="number"  class="form-control" name="numero_piso" id="numero_piso" placeholder="Ingrese numero de piso" max="15" required>           
@@ -78,11 +82,7 @@
                               <div class="col-md-6">
                                 <label for="precio_noche">Precio por noche</label>
                                 <input type="number" class="form-control" name="precio_noche" id="precio_noche" placeholder="Ingrese precio por noche" min="1" max="1000000" required>
-                              </div>
-                               <div class="col-md-6">
-                                <label for="cantidad_personas">Cantidad Personas</label>
-                                <input type="number" class="form-control" name="cantidad_personas" id="cantidad_personas" placeholder="Ingrese cantidad de personas" max="8" required>
-                              </div>    
+                              </div>                                  
                               <div class="col-12">
                                 <label for="tipo_habitacion">Tipo Habitacion</label>
                                 <select name="tipo_habitacion" id="tipo_habitacion" required>
@@ -96,7 +96,7 @@
                                 </select>
                               </div>                                                         
                               <br> 
-                              <div class="col text-center">       
+                              <div class="col-12 text-center">       
                               <button type="submit" class="btn btn-primary btn-guardar">Guardar</button>
                               </div>
                          </form>

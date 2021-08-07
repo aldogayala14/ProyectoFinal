@@ -3,6 +3,7 @@ package Persistencia;
 import Logica.Empleado;
 import Logica.Habitacion;
 import Logica.Huesped;
+import Logica.Reserva;
 import Logica.Usuario;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.util.List;
@@ -48,6 +49,15 @@ public class ControladoraPersistencia {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+     
+     public void crearReserva(Reserva reserva) {
+        try {
+            reservaJpa.create(reserva);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+   
     
 
     public List<Empleado> traerEmpleados() {
@@ -73,6 +83,13 @@ public class ControladoraPersistencia {
         listaHabitaciones = habitacionJpa.findHabitacionEntities();
         return listaHabitaciones;
         }
+        
+        public List<Reserva> traerReservas() {
+        List<Reserva> listaReservas;
+        listaReservas = reservaJpa.findReservaEntities();
+        return listaReservas;
+    }
+
 
   
 
@@ -100,6 +117,15 @@ public class ControladoraPersistencia {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+     public void borrarReservas(long id) {
+        try {
+            reservaJpa.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 
     public Empleado buscarEmpleado(long id) {
        return empleadoJpa.findEmpleado(id);
@@ -140,7 +166,10 @@ public class ControladoraPersistencia {
         }
        
     }
+
    
+    
+    
     
 
   

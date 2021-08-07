@@ -1,3 +1,9 @@
+<%@page import="java.util.List"%>
+<%@page import="Logica.Usuario"%>
+<%@page import="Logica.Habitacion"%>
+<%@page import="Logica.Huesped"%>
+<%@page import="Logica.Empleado"%>
+<%@page import="Logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -13,6 +19,15 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
+        <%HttpSession mi_session = request.getSession();
+          //Aca compruebo que exista un usuario que haya iniciado sesion, sino voy al login
+          String usuario = (String) mi_session.getAttribute("usuario");
+          Controladora control = new Controladora();
+          if(usuario == null){
+              response.sendRedirect("login.jsp");
+          }else{
+             
+           %>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
              <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.jsp">GestSys</a>
@@ -43,12 +58,12 @@
                             
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fa fa-user"></i></div>
-                                Empleado
+                               Reserva
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="cargaEmpleado.jsp">Nuevo Empleado</a>
+                                    <a class="nav-link" href="cargaReserva.jsp">Nueva Reserva</a>
                                     <a class="nav-link" href="layout-sidenav-light.html">Lista empleados</a>
                                 </nav>
                             </div>                            
@@ -64,55 +79,78 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h2 class="mt-4">Carga Empleado</h2>
-                                             
-                         <form action="SvEmpleado" method="POST" class="row g-3">
-                              <div class="col-md-6">
-                                <label for="nombre_empleado">Nombre</label>
-                                <input type="text"  class="form-control" name="nombre_empleado" id="nombre_empleado" placeholder="Ingrese nombre" maxlength="35" required>           
+                        <h2 class="mt-4">Nueva Reserva/Huesped</h2>
+                             <%
+                                       List<Empleado> listaEmpleados = control.traerEmpleados(); 
+                                       String nombreEmpleado="";
+                                       Empleado emple = new Empleado();                                      
+                                        for(Empleado empleado : listaEmpleados){
+                                            if(empleado.getUsuario().getNombre().equals(usuario)){
+                                                nombreEmpleado = empleado.getApellido() + " " + empleado.getNombre();
+                                                emple = empleado;                                               
+                                               
+                                            }
+                                        
+                                           
+                             %>
+                         <div class="row g-3">                            
+                              <div class="col-md-6">                                                            
+                                <label for="usario_empleado">Reserva hecha por el usuario</label>
+                                <input type="text"  class="form-control" name="usuario_empleado" id="usario_empleado" placeholder="Nombre usuario" value="<%=request.getSession().getAttribute("usuario")%>"readonly>           
                               </div>
                               <div class="col-md-6">
-                                <label for="apellido_empleado">Apellido</label>
-                                <input type="text" class="form-control" name="apellido_empleado" id="apellido_empleado" placeholder="Ingrese apellido" maxlength="35" required>
+                                <label for="nombre_empleado">Empleado</label>
+                                <input type="text" class="form-control" name="nombre_empleado" id="nombre_empleado" placeholder="Nombre empleado" value="<%=nombreEmpleado%>" readonly>
                               </div> 
-                              <div class="col-md-6">
-                                <label for="dni_empleado">DNI</label>
-                                <input type="number" class="form-control" name="dni_empleado" id="dni_empleado" placeholder="Ingrese DNI" min="10000" max="100000000" required>
+                              <div  action="SvModificarHuesped" method="GET" class="col-md-6">
+                                  <div class="col-auto">
+                                    <label for="searchTerm" class="visually-hidden">Huesped</label>
+                                    <input type="text" class="form-control" id="searchTerm" placeholder="Buscar huesped" onkeyup="doSearch()">
+                                  </div>  
                               </div>
-                              <div class="col-md-6">
-                                <label for="direccion_empleado">Direccion</label>
-                                <input type="text" class="form-control" name="direccion_empleado" id="direccion_empleado" placeholder="Ingrese direccion" maxlength="30" required>
-                              </div>  
-                              <div class="col-md-6">
-                                <label for="fechaNac_empleado">Fecha Nacimiento</label>
-                                <input type="date" class="form-control" name="fechaNac_empleado" id="fechaNac_empleado" placeholder="Ingrese fecha nacimiento" required>
-                              </div>
-                              <div class="col-md-6">
-                                <label for="cargo_empleado">Cargo</label>
-                                <input type="text" class="form-control" name="cargo_empleado" id="cargo_empleado" placeholder="Ingrese cargo del empleado" maxlength="20" required>
-                              </div> 
-                              <hr></hr>
-                              <div class="col-sm-6">
-                                <label for="usuario_empleado">Usuario</label>                                
-                                <input type="text" class="form-control" name="usuario_empleado" id="usuario_empleado" placeholder="Ingrese usuario del empleado" maxlength="20" required>
-                              </div>   
-                               <div class="col-sm-6">
-                              </div>                                                         
-                              <div class="col-md-6">
-                                <label for="password_empleado">Contraseña</label>
-                                <input type="password" class="form-control" name="password_empleado" id="password_empleado" placeholder="Ingrese contraseña del empleado"  maxlength="20" required>
-                              </div> 
-                              <div class="col-md-6">
-                                <label for="password2_empleado">Repetir Contraseña</label>
-                                <input type="password" class="form-control" name="password2_empleado" id="password2_empleado" placeholder="Repita contraseña del empleado" maxlength="20"  required>
-                              </div> 
-                              <div class="col-12 text-center">       
-                              <button type="submit" class="btn btn-primary btn-guardar">Guardar</button>
-                              </div>
-                         </form>
-
-                         
-                        
+                         </div>
+                              <% }%>
+                                <div class="table-responsive">
+                         <table id="datos" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Apellido</th>
+                                            <th>Nombre</th>
+                                            <th>Dni</th>
+                                            <th>Direccion</th>
+                                            <th>Fecha Nac</th> 
+                                            <th>Seleccion</th>                                                                                    
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% 
+                                        List<Huesped> listaHuespedes = control.traerHuespedes(); 
+                                        for(Huesped huesped : listaHuespedes){%> 
+                                        <tr>
+                                            <%String apellido = huesped.getApellido();%>
+                                            <td><%=apellido%></td>
+                                            <%String nombre = huesped.getNombre();%>
+                                            <td><%=nombre%></td>
+                                            <%String dni = huesped.getDni();%>
+                                            <td><%=dni%></td>
+                                            <%String direccion = huesped.getDireccion();%>
+                                            <td><%=direccion%></td>
+                                            <%  String fecha = control.convertDateToString(huesped.getFechaNac());%>
+                                            <td><%=fecha%></td>
+                                             <%long id = huesped.getId_persona();%>
+                                            <td>
+                                                <form name="formReservaHuesped" action="SvReserva" method="POST">
+                                                <input type="text" name="id_huespedReserva" value="<%=id%>">
+                                                <input type="text" name="id_empleadoReserva" value="<%=emple.getId_persona()%>">
+                                                <button type="submit" class="btn btn-success" name="reservaHuesped">Seleccionar</button>
+                                                </form>                                                
+                                            </td>                                            
+                                        </tr>
+                                    </tbody>
+                                    <%}; %>
+                                </table> 
+                        </div> 
+                                 
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
@@ -129,6 +167,7 @@
                 </footer>
             </div>
         </div>
+                                
         <script type="text/javascript" src="js/app.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
@@ -137,5 +176,6 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <%}%>
     </body>
 </html>

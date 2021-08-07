@@ -27,25 +27,28 @@ public class SvHabitacion extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        int numeroHabitacion= Integer.parseInt(request.getParameter("numero_habitacion"));
         int numeroPiso= Integer.parseInt(request.getParameter("numero_piso"));
         String tipoTematica=request.getParameter("tipo_tematica");
         double precioPorNoche = Double.parseDouble(request.getParameter("precio_noche"));
         String tipoHabitacion = request.getParameter("tipo_habitacion");
-        int cantPersonas = Integer.parseInt(request.getParameter("cantidad_personas"));
+       
        
         
         //traigo la sesion y asigno los atributos para abrir en caulquier JSP
+         request.getSession().setAttribute("numero_habitacion", numeroHabitacion);
         request.getSession().setAttribute("numero_piso", numeroPiso);
         request.getSession().setAttribute("tipo_tematica", tipoTematica);
         request.getSession().setAttribute("precio_noche", precioPorNoche);
         request.getSession().setAttribute("tipo_habitacion", tipoHabitacion);
-        request.getSession().setAttribute("cantidad_personas", cantPersonas);
+        
         
         //conecto con la logica
         Controladora control = new Controladora();
+       
         
         //Creo una habitacion a traves de la controladora
-        control.crearHabitacion(numeroPiso, tipoTematica, precioPorNoche, tipoHabitacion, cantPersonas);
+        control.crearHabitacion(numeroHabitacion,numeroPiso, tipoTematica, precioPorNoche, tipoHabitacion);
         
         //armar la respuestaS
         response.sendRedirect("index.jsp");
