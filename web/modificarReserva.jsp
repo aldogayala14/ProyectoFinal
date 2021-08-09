@@ -1,4 +1,9 @@
+<%@page import="Logica.Reserva"%>
+<%@page import="java.util.List"%>
+<%@page import="Logica.Usuario"%>
 <%@page import="Logica.Habitacion"%>
+<%@page import="Logica.Huesped"%>
+<%@page import="Logica.Empleado"%>
 <%@page import="Logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -15,10 +20,12 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
-        <!--Verifica si existe una sesion-->
-       <%  HttpSession mi_session = request.getSession();
+        <%HttpSession mi_session = request.getSession();
           //Aca compruebo que exista un usuario que haya iniciado sesion, sino voy al login
           String usuario = (String) mi_session.getAttribute("usuario");
+         
+         
+          Controladora control = new Controladora();
           if(usuario == null){
               response.sendRedirect("login.jsp");
           }else{
@@ -113,64 +120,121 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Bienvenido</h1>
-                                             
-                         <form action="SvModificarHabitacion" method="GET" class="row g-3">
-                              <% HttpSession miSession = request.getSession();
-                             Controladora control = new Controladora();
-                                Habitacion habitacion = (Habitacion) miSession.getAttribute("habitacion");
-                                {%>
+                        <h2 class="mt-4">Nueva Reserva/Modificar</h2>
+                             <%
+                                     
+                                      Reserva reserva = (Reserva) request.getSession().getAttribute("reserva");
+                                      String nombreEmpleado = reserva.getEmpleado().getApellido();
+                                      String nombreHuesped = reserva.getHuesped().getApellido();
+                                      String apellidoHuesped = reserva.getHuesped().getApellido();
+                                      String dniHuesped = reserva.getHuesped().getDni();
+                                      String direccionHuesped = reserva.getHuesped().getDireccion();
+                                      String numeroHabitacion = String.valueOf(reserva.getHabitacion().getNumero_habitacion());
+                                      String numeroPiso = String.valueOf(reserva.getHabitacion().getPiso());
+                                      String tipoTematica = reserva.getHabitacion().getTipoTematica();
+                                      double precioNoche = reserva.getHabitacion().getPrecioNoche();
+                                      String tipoHabitacion = reserva.getHabitacion().getTipoHabitacion();
+                                      String observaciones = reserva.getObservaciones();
+                                     
+                             %>
+                         <div class="row g-3">                            
+                              <div class="col-md-6">                                                            
+                                <label for="usario_empleado">Reserva realizada por el usuario</label>
+                                <input type="text"  class="form-control" name="usuario_empleado" id="usario_empleado" placeholder="Nombre usuario" value="<%=request.getSession().getAttribute("usuario")%>"readonly>           
+                              </div>
+                              <div class="col-md-6">
+                                <label for="nombre_empleado">Empleado</label>
+                                <input type="text" class="form-control" name="nombre_empleado" id="nombre_empleado" placeholder="Nombre empleado" value="<%=nombreEmpleado%>" readonly>
+                              </div>                                                             
+                         </div>                        
+                         <hr>
+                         <h3>Datos huesped</h3>                         
+                        <div class="row g-3"> 
+                         
+                              <div class="col-md-6">
+                                <label for="nombre_huesped">Nombre Huesped</label>
+                                <input type="text"  class="form-control" name="nombre_huesped" id="nombre_huesped" placeholder="Ingrese nombre" maxlength="35" value="<%=nombreHuesped%>" readonly>           
+                              </div>
+                              <div class="col-md-6">
+                                <label for="apellido_huesped">Apellido</label>
+                                <input type="text" class="form-control" name="apellido_huesped" id="apellido_huesped" placeholder="Ingrese apellido" maxlength="35" value="<%=apellidoHuesped%>"readonly>
+                              </div> 
+                              <div class="col-md-6">
+                                <label for="dni_huesped">DNI</label>
+                                <input type="number" class="form-control" name="dni_huesped" id="dni_huesped" placeholder="Ingrese DNI" min="10000" max="100000000" value="<%=dniHuesped%>" readonly>
+                              </div>
+                              <div class="col-md-6">
+                                <label for="direccion_huesped">Direccion</label>
+                                <input type="text" class="form-control" name="direccion_huesped" id="direccion_huesped" placeholder="Ingrese direccion" maxlength="30" value="<%=direccionHuesped%>"readonly>
+                              </div>  
+                        </div>
+                        
+                         <hr>
+                         <h3>Datos habitacion</h3>
+                         <div class="row g-3">
+                             
                                 <div class="col-md-6">
                                 <label for="numero_habitacion">Numero de Habitacion</label>
-                                <input type="number"  class="form-control" name="numero_habitacion" id="numero_habitacion" placeholder="Ingrese numero habitacion" max="15" value="<%=habitacion.getNumero_habitacion()%>" required>           
+                                <input type="number"  class="form-control" name="numero_habitacion" id="numero_habitacion" placeholder="Ingrese numero habitacion" max="15" value="<%=numeroHabitacion%>" readonly>           
                               </div>
                               <div class="col-md-6">
                                 <label for="numero_piso">Numero de Piso</label>
-                                <input type="number"  class="form-control" name="numero_piso" id="numero_piso" placeholder="Ingrese numero de piso" max="15" value="<%=habitacion.getPiso()%>" required>           
+                                <input type="number"  class="form-control" name="numero_piso" id="numero_piso" placeholder="Ingrese numero de piso" max="15" value="<%=numeroPiso%>" readonly>           
                               </div>
                               <div class="col-md-6">
                                 <label for="tipo_tematica">Tipo tematica</label>
-                                <input type="text" class="form-control" name="tipo_tematica" id="tipo_tematica" placeholder="Ingrese tematica de habitacion" maxlength="35" value="<%=habitacion.getTipoTematica()%>" required>
+                                <input type="text" class="form-control" name="tipo_tematica" id="tipo_tematica" placeholder="Ingrese tematica de habitacion" maxlength="35" value="<%=tipoTematica%>" readonly>
                               </div> 
                               <div class="col-md-6">
                                 <label for="precio_noche">Precio por noche</label>
-                                <input type="number" class="form-control" name="precio_noche" id="precio_noche" placeholder="Ingrese precio por noche" min="1" max="1000000" value="<%=habitacion.getPrecioNoche()%>" required>
+                                <input type="number" class="form-control" name="precio_noche" id="precio_noche" placeholder="Ingrese precio por noche" min="1" max="1000000" value="<%=precioNoche%>" readonly>
                               </div>                                  
-                              <div class="col-12">                                 
-                                <label for="tipo_habitacion">Tipo Habitacion</label>
-                                <select name="tipo_habitacion" id="tipo_habitacion" required>
-                                      <option value="single" 
-                                              <%if(habitacion.getTipoHabitacion().equals("single"))
-                                      {%> selected 
-                                      <%}%>
-                                      >Single</option>
-                                      <option value="doble"
-                                              <%if(habitacion.getTipoHabitacion().equals("doble"))
-                                      {%> selected 
-                                      <%}%>
-                                      >Doble</option>
-                                      <option value="triple"
-                                              <%if(habitacion.getTipoHabitacion().equals("triple"))
-                                      {%> selected 
-                                      <%}%>
-                                      >Triple</option>
-                                      <option value="multiple"
-                                              <%if(habitacion.getTipoHabitacion().equals("multiple"))
-                                      {%> selected 
-                                      <%}%>
-                                      >Multiple</option>
-                                </select>
-                              </div>                                                         
-                              <br> 
-                              <div class="col-12">
-                                <input type="hidden" name="id_habitacion" value="<%=habitacion.getId_habitacion()%>"
+                              <div class="col-6">                                 
+                                 <label for="tipo_habitacion">Tipo Habitacion</label>
+                                <input type="text" class="form-control" name="tipo_habitacion" id="tipo_habitacion" placeholder="Ingrese precio por noche" min="1"  value="<%=tipoHabitacion%>" readonly>            
+                            
+                         </div>
+                         <hr>
+                         <form class="" method="GET" action="SvModificarReserva">
+                         <div class="row g-3">
+                               <div class="col-md-6">
+                                <label for="fecha_ingreso">Fecha Check-in</label>
+                                <input type="date" class="form-control" name="fecha_ingreso" id="fecha_ingreso" placeholder="Ingrese fecha de ingreso" value="<%=control.convertDateToStringCalendar(reserva.getFecha_checkIn())%>" required>
+                              </div>                                  
+                               <div class="col-md-6">
+                                <label for="fecha_egreso">Fecha Check-out</label>
+                                <input type="date" class="form-control" name="fecha_egreso" id="fecha_egreso" placeholder="Ingrese fecha de egreso" value="<%=control.convertDateToStringCalendar(reserva.getFecha_checkOut())%>" required>
+                              </div> 
+                              <div class="col-md-6">
+                                <label for="cantidad_personas">Cantidad de personas</label>
+                                <input type="number" class="form-control" name="cantidad_personas" id="cantidad_personas" placeholder="Ingrese cantidad personas" min="1" max="8" value="<%= reserva.getCantPersonas() %>" required>
+                              </div>    
+                              <div class="col-md-6"></div>
+                              <div class="col-md-6">                                
+                                <textarea class="form-control" placeholder="Observaciones" id="observaciones_reserva" name="observaciones_reserva" maxlength="60" ><%=observaciones%></textarea>
                               </div>
-                              <div class="col text-center">       
-                              <button type="submit" class="btn btn-primary btn-guardar">Guardar</button>
-                              </div>
-                              <%}%>
+
+                         </div>
+                         <hr>                        
+
+                         <div class="row g-3">
+                            <div class="col-md-6 text-center" >
+                              <a class="btn btn-danger" href="index.jsp">Cancelar</a>                              
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <input type="hidden" name="idHuespedModificar" value="<%= reserva.getHuesped().getId_persona()%>">
+                                <input type="hidden" name="idHabitacionModificar" value="<%= reserva.getHabitacion().getId_habitacion()%>">                               
+                                <input type="hidden" name="idEmpleadoModificar" value="<%= reserva.getEmpleado().getId_persona()%>">
+                                <input type="hidden" name="idReservaModificar" value="<%=  reserva.getId_reserva()%>">
+                                <button type="submit" class="btn btn-success" onClick="compReserva()">Modificar</button>
+                            </div>                            
+                         </div>
                          </form>
-                        
+                         <br>
+                         <div class="row g-3">
+                         </div>
+
+                              
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
@@ -182,6 +246,7 @@
                 </footer>
             </div>
         </div>
+                                
         <script type="text/javascript" src="js/app.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
@@ -190,7 +255,6 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
-         <%}%>
+        <%}%>
     </body>
 </html>
-

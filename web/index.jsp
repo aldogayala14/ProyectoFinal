@@ -96,8 +96,9 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="cargaReserva.jsp">Nuevo Reserva</a>
                                     <a class="nav-link" href="listaReservas.jsp">Lista Reservas</a>
-                                    <a class="nav-link" href="listaDeterminadoDia.jsp">Lista por empleado</a>
-                                    <a class="nav-link" href="listaDeterminadoDia.jsp">Lista huesped periodo</a>
+                                    <a class="nav-link" href="listaReservasFechas.jsp">Lista por fecha</a>
+                                    <a class="nav-link" href="listasReservasEmpleados.jsp">Lista por empleado</a>
+                                    <a class="nav-link" href="listaReservasPeriodo.jsp">Lista huesped periodo</a>
                                 </nav>
                             </div>
 

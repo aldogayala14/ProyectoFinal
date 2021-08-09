@@ -1,3 +1,8 @@
+<%@page import="java.util.Date"%>
+<%@page import="Logica.Habitacion"%>
+<%@page import="Logica.Huesped"%>
+<%@page import="Logica.Empleado"%>
+<%@page import="Logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -13,7 +18,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
-         <!--Verifica si existe una sesion-->
+        <!--Verifica si existe una sesion-->
        <%  HttpSession mi_session = request.getSession();
           //Aca compruebo que exista un usuario que haya iniciado sesion, sino voy al login
           String usuario = (String) mi_session.getAttribute("usuario");
@@ -22,22 +27,25 @@
           }else{
              
            %>
+       
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-             <!-- Navbar Brand-->
+            <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.jsp">RSVATION</a>
             <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>         
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>  
             <!-- Navbar Search-->
-            <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">                   
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    
                 </div>
-            </div>
+            </form>
             <!-- Navbar-->
-            <ul class="navbar-nav text-right">
+           <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                         <li><a class="dropdown-item" href="#!"><%=request.getSession().getAttribute("usuario") %></a></li>
+                        <li><a class="dropdown-item" href="#!"><%=request.getSession().getAttribute("usuario") %></a></li>                        
+                        <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="SvLogout">Logout</a></li>
                     </ul>
                 </li>
@@ -109,52 +117,88 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">Bienvenido</h1>
-                                             
-                         <form action="SvHuesped" method="POST" class="row g-3">
-                              <div class="col-md-6">
-                                <label for="nombre_huesped">Nombre</label>
-                                <input type="text"  class="form-control" name="nombre_huesped" id="nombre_huesped" placeholder="Ingrese nombre" maxlength="35" required>           
-                              </div>
-                              <div class="col-md-6">
-                                <label for="apellido_huesped">Apellido</label>
-                                <input type="text" class="form-control" name="apellido_huesped" id="apellido_huesped" placeholder="Ingrese apellido" maxlength="35" required>
-                              </div> 
-                              <div class="col-md-6">
-                                <label for="dni_huesped">DNI</label>
-                                <input type="number" class="form-control" name="dni_huesped" id="dni_huesped" placeholder="Ingrese DNI" min="10000" max="100000000" required>
-                              </div>
-                              <div class="col-md-6">
-                                <label for="direccion_huesped">Direccion</label>
-                                <input type="text" class="form-control" name="direccion_huesped" id="direccion_huesped" placeholder="Ingrese direccion" maxlength="30" required>
-                              </div>  
-                              <div class="col-md-6">
-                                <label for="fechaNac_huesped">Fecha Nacimiento</label>
-                                <input type="date" class="form-control" name="fechaNac_huesped" id="fechaNac_huesped" placeholder="Ingrese fecha nacimiento" required>
-                              </div>
-                              <div class="col-md-6">
-                                <label for="profesion_huesped">Profesion</label>
-                                <input type="text" class="form-control" name="profesion_huesped" id="profesion_huesped" placeholder="Ingrese profesion del huesped" maxlength="20" required>
-                              </div>  
-                              <br> 
-                              <div class="col text-center">       
-                              <button type="submit" class="btn btn-primary btn-guardar">Guardar</button>
-                              </div>
-                         </form>
+                    <div class="container-fluid px-4">  
+
+                     <% 
+
+                                Controladora control = new Controladora();
+                                long idEmpleado = (Long) request.getSession().getAttribute("id_empleado_com");
+                                Empleado empleado = (Empleado) control.buscarEmpleado(idEmpleado);
+
+                                long idHuesped =(Long) request.getSession().getAttribute("id_huesped_com");
+                                Huesped huesped = (Huesped) control.buscarHuesped(idHuesped);
+
+                                long idHabitacion = (Long) request.getSession().getAttribute("id_habitacion_com");
+                                Habitacion habitacion = (Habitacion) control.buscarHabitacion(idHabitacion);
+                                
+                                Date date = new Date();
+                                String fecha = control.convertDateToString(date);
+                                
+                                String fecha_ingreso = (String) request.getSession().getAttribute("fecha_ingreso_com");
+                                String fecha_egreso = (String) request.getSession().getAttribute("fecha_egreso_com");
+                                
+                                int cantidadDias = control.cantDias(fecha_ingreso, fecha_egreso);
+
+                                Date fechaIngreso = control.convertStringToDate(fecha_ingreso);
+                                 Date fechaEgreso = control.convertStringToDate(fecha_egreso);
+
+
+                            %>
+                                                                     
+                        <div class="row div-main-comprobante"> 
+                          <h2 class="mt-4">Comprobante de reserva</h2>
+                            <div class="row g-3 div_comprobante">
+                                
+                                 <div class="col-md-6 comprobante">
+                                <p><span class="span-cabecera">Empleado: <%=empleado.getApellido()%> </span></p>
+                                <p>Usuario: <%=empleado.getUsuario().getNombre()%> <p>
+                                </div>
+                                <div class="col-md-6 comprobante">
+                                <p><span class="span-cabecera">Comprobante: xxx-xxxxxxxxxx-xxx</span></p>
+                                <p>Fecha: <%=fecha%> <p>
+                                </div>
+                                <hr>
+                                 <div class="col-md-6 comprobante">
+                                <p><span class="span-cabecera">Huesped: <%= huesped.getApellido() %></span> </p>
+                                <p>DNI: <%=huesped.getDni()%> <p>
+                                <p>Direccion: <%=huesped.getDireccion()%> <p>
+                                <p>Fecha Nac: <%=control.convertDateToString(huesped.getFechaNac()) %> </p>                                
+                                </div>
+                                 <div class="col-md-6 comprobante">
+                                <p><span class="span-cabecera">Habitacion: <%= habitacion.getNumero_habitacion() %></span></p>
+                                <p>Piso: <%= habitacion.getPiso() %> <p>
+                                <p>Tematica: <%= habitacion.getTipoTematica() %> <p>
+                                <p>Tipo Habitacion: <%= habitacion.getTipoHabitacion() %> </p>                                
+                                </div>
+                                <hr>
+                                 <div class="col-md-6 comprobante">
+                                <p>Fecha ingreso: <%= control.convertDateToString(fechaIngreso) %> </p>
+                                <p>Fecha salida: <%=control.convertDateToString(fechaEgreso)%><p>
+                                <p>Cantidad noches: <%= cantidadDias%><p>
+                                <p>Precio por noche: $<%= habitacion.getPrecioNoche()%></p>                                
+                                </div>
+                                <div class="col-md-6 comprobante">
+                                <p><span class="span-cabecera">Total:</span> <span class="total_compr">$<%=(habitacion.getPrecioNoche()*cantidadDias)%></span></p>
+                                                              
+                                </div>
+                                <hr>
+                                <div class="col-12 text-center">
+                                    <a href="index.jsp"><button type="button" class="btn btn-primary btn-guardar">Ir a inicio</button></a>
+                                </div>
+                          </div>                                                                         
+                        
                         
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; RSVATION 2021</div> 
+                            <div class="text-muted">Copyright &copy; RSVATION 2021</div>                            
                         </div>
                     </div>
                 </footer>
             </div>
         </div>
-        <script type="text/javascript" src="js/app.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>

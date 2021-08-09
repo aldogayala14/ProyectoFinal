@@ -1,3 +1,8 @@
+<%@page import="Logica.Huesped"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.List"%>
+<%@page import="Logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -37,7 +42,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                         <li><a class="dropdown-item" href="#!"><%=request.getSession().getAttribute("usuario") %></a></li>
+                        <li><a class="dropdown-item" href="#!"><%=request.getSession().getAttribute("usuario") %></a></li>                        
+                        <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="SvLogout">Logout</a></li>
                     </ul>
                 </li>
@@ -109,40 +115,58 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">Bienvenido</h1>
-                                             
-                         <form action="SvHuesped" method="POST" class="row g-3">
-                              <div class="col-md-6">
-                                <label for="nombre_huesped">Nombre</label>
-                                <input type="text"  class="form-control" name="nombre_huesped" id="nombre_huesped" placeholder="Ingrese nombre" maxlength="35" required>           
-                              </div>
-                              <div class="col-md-6">
-                                <label for="apellido_huesped">Apellido</label>
-                                <input type="text" class="form-control" name="apellido_huesped" id="apellido_huesped" placeholder="Ingrese apellido" maxlength="35" required>
-                              </div> 
-                              <div class="col-md-6">
-                                <label for="dni_huesped">DNI</label>
-                                <input type="number" class="form-control" name="dni_huesped" id="dni_huesped" placeholder="Ingrese DNI" min="10000" max="100000000" required>
-                              </div>
-                              <div class="col-md-6">
-                                <label for="direccion_huesped">Direccion</label>
-                                <input type="text" class="form-control" name="direccion_huesped" id="direccion_huesped" placeholder="Ingrese direccion" maxlength="30" required>
-                              </div>  
-                              <div class="col-md-6">
-                                <label for="fechaNac_huesped">Fecha Nacimiento</label>
-                                <input type="date" class="form-control" name="fechaNac_huesped" id="fechaNac_huesped" placeholder="Ingrese fecha nacimiento" required>
-                              </div>
-                              <div class="col-md-6">
-                                <label for="profesion_huesped">Profesion</label>
-                                <input type="text" class="form-control" name="profesion_huesped" id="profesion_huesped" placeholder="Ingrese profesion del huesped" maxlength="20" required>
-                              </div>  
-                              <br> 
-                              <div class="col text-center">       
-                              <button type="submit" class="btn btn-primary btn-guardar">Guardar</button>
-                              </div>
+                    <div class="container-fluid"> 
+                        <h2 class="mt-3">Lista Periodo/Huesped</h2>
+                        <form form name="formBusquedaPeriodo" action="SvListaPeriodo" method="POST"> 
+                        <div class="table-responsive">
+                            <div class="buscador">
+                            <div class="row g-3">
+                                  <div class="col-md-4">
+                                    <label for="searchTerm">Huesped</label>
+                                    <input type="text" class="form-control" id="searchTerm" placeholder="Buscar huesped" onkeyup="doSearch()">
+                                  </div>                                     
+                              </div>                                
+                            </div>
+                         <table id="datos" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Apellido</th>
+                                            <th>Nombre</th>
+                                            <th>Dni</th>
+                                            <th>Direccion</th>
+                                            <th>Fecha Nac</th> 
+                                            <th>Seleccion</th>                                                                                    
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% 
+                                            Controladora control = new Controladora();
+                                        List<Huesped> listaHuespedes = control.traerHuespedes(); 
+                                        for(Huesped huesped : listaHuespedes){%> 
+                                        <tr>
+                                            <%String apellido = huesped.getApellido();%>
+                                            <td><%=apellido%></td>
+                                            <%String nombre = huesped.getNombre();%>
+                                            <td><%=nombre%></td>
+                                            <%String dni = huesped.getDni();%>
+                                            <td><%=dni%></td>
+                                            <%String direccion = huesped.getDireccion();%>
+                                            <td><%=direccion%></td>
+                                            <%  String fecha = control.convertDateToString(huesped.getFechaNac());%>
+                                            <td><%=fecha%></td>
+                                             <%long id = huesped.getId_persona();%>
+                                            <td>
+                                                <form name="formReservaHuesped" action="SvListaPeriodo" method="POST">
+                                                <input type="text" name="id_huesped_periodo" value="<%=id%>">                                                
+                                                <button type="submit" class="btn btn-success" name="reservaHuesped">Seleccionar</button>
+                                                </form>                                                
+                                            </td>                                            
+                                        </tr>
+                                    </tbody>
+                                    <%}; %>
+                                </table> 
+                        </div>                   
                          </form>
-                        
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
@@ -162,6 +186,7 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
-        <%}%>
+         <%}%>
     </body>
 </html>
+

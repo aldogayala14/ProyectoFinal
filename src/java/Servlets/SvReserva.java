@@ -34,11 +34,13 @@ public class SvReserva extends HttpServlet {
         Huesped huesped = control.buscarHuesped(idHuesped);
         Habitacion habitacion = control.buscarHabitacion(idHabitacion);
         Empleado empleado = control.buscarEmpleado(idEmpleado);
+        boolean bandera = true;
 
         HttpSession miSession = request.getSession();
         miSession.setAttribute("huespedFinal", huesped);
         miSession.setAttribute("habitacionFinal", habitacion);
          miSession.setAttribute("empleadoFinal", empleado);
+          miSession.setAttribute("banderaFinal", bandera);
         response.sendRedirect("cargaReservaConfirmacion.jsp");
     }
 

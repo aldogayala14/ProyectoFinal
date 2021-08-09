@@ -1,3 +1,8 @@
+<%@page import="Logica.Huesped"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.List"%>
+<%@page import="Logica.Controladora"%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -13,7 +18,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
-         <!--Verifica si existe una sesion-->
+        <!--Verifica si existe una sesion-->
        <%  HttpSession mi_session = request.getSession();
           //Aca compruebo que exista un usuario que haya iniciado sesion, sino voy al login
           String usuario = (String) mi_session.getAttribute("usuario");
@@ -37,7 +42,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                         <li><a class="dropdown-item" href="#!"><%=request.getSession().getAttribute("usuario") %></a></li>
+                        <li><a class="dropdown-item" href="#!"><%=request.getSession().getAttribute("usuario") %></a></li>                        
+                        <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="SvLogout">Logout</a></li>
                     </ul>
                 </li>
@@ -109,40 +115,47 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">Bienvenido</h1>
-                                             
-                         <form action="SvHuesped" method="POST" class="row g-3">
+                    <div class="container-fluid"> 
+                        <h2 class="mt-3">Lista Periodo/Fecha</h2>
+                         <div class="row g-3"> 
+                         <% HttpSession miSession = request.getSession();                            
+                                Huesped huesped = (Huesped) miSession.getAttribute("huesped_periodo");
+                                {%>
                               <div class="col-md-6">
-                                <label for="nombre_huesped">Nombre</label>
-                                <input type="text"  class="form-control" name="nombre_huesped" id="nombre_huesped" placeholder="Ingrese nombre" maxlength="35" required>           
+                                <label for="nombre_huesped">Nombre Huesped</label>
+                                <input type="text"  class="form-control" name="nombre_huesped" id="nombre_huesped" placeholder="Ingrese nombre" maxlength="35" value="<%=huesped.getNombre()%>" readonly>           
                               </div>
                               <div class="col-md-6">
                                 <label for="apellido_huesped">Apellido</label>
-                                <input type="text" class="form-control" name="apellido_huesped" id="apellido_huesped" placeholder="Ingrese apellido" maxlength="35" required>
+                                <input type="text" class="form-control" name="apellido_huesped" id="apellido_huesped" placeholder="Ingrese apellido" maxlength="35" value="<%=huesped.getApellido()%>"readonly>
                               </div> 
                               <div class="col-md-6">
                                 <label for="dni_huesped">DNI</label>
-                                <input type="number" class="form-control" name="dni_huesped" id="dni_huesped" placeholder="Ingrese DNI" min="10000" max="100000000" required>
+                                <input type="number" class="form-control" name="dni_huesped" id="dni_huesped" placeholder="Ingrese DNI" min="10000" max="100000000" value="<%=huesped.getDni()%>" readonly>
                               </div>
                               <div class="col-md-6">
                                 <label for="direccion_huesped">Direccion</label>
-                                <input type="text" class="form-control" name="direccion_huesped" id="direccion_huesped" placeholder="Ingrese direccion" maxlength="30" required>
-                              </div>  
-                              <div class="col-md-6">
-                                <label for="fechaNac_huesped">Fecha Nacimiento</label>
-                                <input type="date" class="form-control" name="fechaNac_huesped" id="fechaNac_huesped" placeholder="Ingrese fecha nacimiento" required>
-                              </div>
-                              <div class="col-md-6">
-                                <label for="profesion_huesped">Profesion</label>
-                                <input type="text" class="form-control" name="profesion_huesped" id="profesion_huesped" placeholder="Ingrese profesion del huesped" maxlength="20" required>
-                              </div>  
-                              <br> 
-                              <div class="col text-center">       
-                              <button type="submit" class="btn btn-primary btn-guardar">Guardar</button>
-                              </div>
-                         </form>
-                        
+                                <input type="text" class="form-control" name="direccion_huesped" id="direccion_huesped" placeholder="Ingrese direccion" maxlength="30" value="<%=huesped.getDireccion()%>"readonly>
+                              </div> 
+                              
+                        </div>
+                        <hr>
+                        <form class="row g-3" method="GET" action="SvListaPeriodo"> 
+                            <div class="col-md-6">
+                                <label for="fecha_inicio">Fecha Inicio</label>
+                                <input type="date" class="form-control" name="fecha_inicio" id="fecha_incio" placeholder="Ingrese fecha de ingreso" required>
+                              </div>                                  
+                               <div class="col-md-6">
+                                <label for="fecha_fin">Fecha Fin</label>
+                                <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" placeholder="Ingrese fecha de egreso" required>
+                              </div> 
+                            <div class="col-12 text-center">
+                                <input type="text" name="id_huesped_periodo_final" value="<%=huesped.getId_persona()%>">
+                                <button type="submit" class="btn btn-success">Buscar</button>
+                                
+                            </div>
+                        </form>
+                                <%}%>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
@@ -165,3 +178,4 @@
         <%}%>
     </body>
 </html>
+

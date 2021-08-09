@@ -20,3 +20,41 @@
 #header-login h3{
 	color: white;
 }
+.div-main-comprobante{
+	margin-right:2rem;
+}
+.div_comprobante{
+	margin: 2rem;
+	padding: 1rem;
+	background-color: #EAF3FA;
+}
+
+.comprobante > p{
+		
+	color: black;
+}
+
+.total_compr{
+	font-size: 1.3rem;
+	font-weight: bold;
+	color: #ef233c;
+}
+
+.span-cabecera{
+	font-weight: bold;
+	font-size: 1.2rem;
+}
+
+.p-footer-reserva{
+	font-weight: bold;
+	margin: 1rem;
+	padding: 1rem;
+	font-size: 1.1rem;
+	color: #ef233c;
+}
+
+
+.buscador{
+	margin:  0.2rem;
+	padding: 0.5rem;
+}

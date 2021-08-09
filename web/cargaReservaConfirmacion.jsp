@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>GestSys</title>
+        <title>RSVATION</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="css/estilos.css">
@@ -32,7 +32,7 @@
            %>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
              <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.jsp">GestSys</a>
+            <a class="navbar-brand ps-3" href="index.jsp">RSVATION</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>         
             <!-- Navbar Search-->
@@ -42,11 +42,12 @@
             </div>
             <!-- Navbar-->
             <ul class="navbar-nav text-right">
-                <li class="nav-item dropdown">
+               <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                         <li><a class="dropdown-item" href="#!">Usuario : user</a></li>
-                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                        <li><a class="dropdown-item" href="#!"><%=request.getSession().getAttribute("usuario") %></a></li>                        
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="SvLogout">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -60,21 +61,58 @@
                             
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fa fa-user"></i></div>
-                               Reserva
+                                Empleado
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="cargaReserva.jsp">Nueva Reserva</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">Lista empleados</a>
+                                    <a class="nav-link" href="cargaEmpleado.jsp">Nuevo Empleado</a>
+                                    <a class="nav-link" href="listaEmpleados.jsp">Lista empleados</a>
                                 </nav>
-                            </div>                            
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                                <div class="sb-nav-link-icon"><i class="fa fa-users"></i></div>
+                                Huesped
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                 <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="cargaHuesped.jsp">Nuevo Huesped</a>
+                                    <a class="nav-link" href="listaHuespedes.jsp">Lista huespedes</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages2" aria-expanded="false" aria-controls="collapsePages">
+                                <div class="sb-nav-link-icon"><i class="fa fa-bed"></i></div>
+                                Habitacion
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapsePages2" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="cargaHabitacion.jsp">Nuevo Habitacion</a>
+                                    <a class="nav-link" href="listaHabitaciones.jsp">Lista Habitaciones</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages3" aria-expanded="false" aria-controls="collapsePages">
+                                <div class="sb-nav-link-icon"><i class="fa fa-calendar"></i></div>
+                                Reserva
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapsePages3" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="cargaReserva.jsp">Nuevo Reserva</a>
+                                    <a class="nav-link" href="listaReservas.jsp">Lista Reservas</a>
+                                    <a class="nav-link" href="listaReservasFechas.jsp">Lista por fecha</a>
+                                    <a class="nav-link" href="listasReservasEmpleados.jsp">Lista por empleado</a>
+                                    <a class="nav-link" href="listaReservasPeriodo.jsp">Lista huesped periodo</a>
+                                </nav>
+                            </div>
+
                             
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Usuario : user
+                        <div class="small">Logueado como:</div>
+                        <p><%=request.getSession().getAttribute("usuario") %></p>
                     </div>
                 </nav>
             </div>
@@ -90,6 +128,7 @@
                                                 nombreEmpleado = empleado.getApellido() + " " + empleado.getNombre();
                                                
                                             }
+                                        }
                                         
                                            
                              %>
@@ -102,8 +141,7 @@
                                 <label for="nombre_empleado">Empleado</label>
                                 <input type="text" class="form-control" name="nombre_empleado" id="nombre_empleado" placeholder="Nombre empleado" value="<%=nombreEmpleado%>" readonly>
                               </div>                                                             
-                         </div>
-                         <%}%>
+                         </div>                        
                          <hr>
                          <h3>Datos huesped</h3>                         
                         <div class="row g-3"> 
@@ -174,18 +212,34 @@
                               <div class="col-md-6">                                
                                 <textarea class="form-control" placeholder="Observaciones" id="observaciones_reserva" name="observaciones_reserva" maxlength="60"></textarea>
                               </div>
+
                          </div>
                          <hr>
                          <div class="row g-3">
+                                <div class="col-md-12">
+                                  <%  boolean bandera =(Boolean) miSession.getAttribute("banderaFinal");%>
+                                     <% String res=" ";
+
+                                      if(bandera == false){
+                                        res ="La habitacion no esta disponible en este rango de fechas. Intente de nuevo";
+                                      }
+                                      
+                                      
+                                  %>
+                                  <p class="col- 12 text-center p-footer-reserva"><%=res%></p>
+                              </div>
+                          </div>
+
+                         <div class="row g-3">
                             <div class="col-md-6 text-center" >
-                              <a class="btn btn-danger" href="index.jsp">Cancelar</a>
+                              <a class="btn btn-danger" href="index.jsp">Cancelar</a>                              
                             </div>
                             <div class="col-md-6 text-center">
-                                <input type="text" name="idHuespedFinal" value="<%=huesped.getId_persona()%>">
-                                <input type="text" name="idHabitacionFinal" value="<%=habitacion. getId_habitacion()%>">
+                                <input type="hidden" name="idHuespedFinal" value="<%=huesped.getId_persona()%>">
+                                <input type="hidden" name="idHabitacionFinal" value="<%=habitacion. getId_habitacion()%>">
                                 <%  Empleado empleado = (Empleado) miSession.getAttribute("empleadoFinal");%>
-                                <input type="text" name="idEmpleadoFinal" value="<%=empleado.getId_persona()%>">
-                                <button type="submit" class="btn btn-success">Reservar</button>
+                                <input type="hidden" name="idEmpleadoFinal" value="<%=empleado.getId_persona()%>">
+                                <button type="submit" class="btn btn-success" onClick="compReserva()">Reservar</button>
                             </div>                            
                          </div>
                          </form>
@@ -199,12 +253,7 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
+                            <div class="text-muted">Copyright &copy; RSVATION 2021</div>
                         </div>
                     </div>
                 </footer>
