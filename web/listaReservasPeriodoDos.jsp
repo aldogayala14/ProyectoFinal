@@ -150,7 +150,7 @@
                                 <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" placeholder="Ingrese fecha de egreso" required>
                               </div> 
                             <div class="col-12 text-center">
-                                <input type="text" name="id_huesped_periodo_final" value="<%=huesped.getId_persona()%>">
+                                <input type="hidden" name="id_huesped_periodo_final" value="<%=huesped.getId_persona()%>">
                                 <button type="submit" class="btn btn-success">Buscar</button>
                                 
                             </div>

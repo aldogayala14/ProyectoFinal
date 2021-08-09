@@ -157,7 +157,7 @@
                                              <%long id = huesped.getId_persona();%>
                                             <td>
                                                 <form name="formReservaHuesped" action="SvListaPeriodo" method="POST">
-                                                <input type="text" name="id_huesped_periodo" value="<%=id%>">                                                
+                                                <input type="hidden" name="id_huesped_periodo" value="<%=id%>">                                                
                                                 <button type="submit" class="btn btn-success" name="reservaHuesped">Seleccionar</button>
                                                 </form>                                                
                                             </td>                                            
