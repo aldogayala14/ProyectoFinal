@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -146,10 +147,10 @@
                               </div>                                                                                  
                               <div class="col-md-6">
                                 <label for="pass1">Contraseña</label>
-                                <input type="password" class="form-control" name="password_empleado" id="pass1" placeholder="Ingrese contraseña del empleado"  maxlength="20" required>
+                                <input type="password" class="form-control" name="password_empleado" id="pass1" placeholder="Ingrese contraseña del empleado" minlength="3" maxlength="20" required>
                               </div> 
                               <div class="col-12 text-center">       
-                              <button type="submit" class="btn btn-primary btn-guardar" id="boton_guardar">Guardar</button>
+                              <button type="submit" class="btn btn-primary btn-guardar" id="boton_guardar" onClick="isEmptyCargaEmpleado()">Guardar</button>
                               </div>
                          </form>
 

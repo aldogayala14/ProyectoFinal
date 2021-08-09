@@ -135,9 +135,6 @@
                               <div class="col-12">
                                 <label for="tipo_habitacion">Tipo Habitacion</label>
                                 <select name="tipo_habitacion" id="tipo_habitacion" required>
-                                     <option value="none" selected disabled hidden>
-                                        Seleccione una opcion
-                                     </option>
                                       <option value="single">Single</option>
                                       <option value="doble">Doble</option>
                                       <option value="triple">Triple</option>
@@ -146,7 +143,7 @@
                               </div>                                                         
                               <br> 
                               <div class="col-12 text-center">       
-                              <button type="submit" class="btn btn-primary btn-guardar">Guardar</button>
+                              <button type="submit" class="btn btn-primary btn-guardar" onclick="isEmptyCargaHabitacion()">Guardar</button>
                               </div>
                          </form>
                         

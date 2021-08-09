@@ -16,7 +16,7 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="css/estilos.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>        
     </head>
     <body class="sb-nav-fixed">
         <%HttpSession mi_session = request.getSession();
@@ -202,11 +202,11 @@
                               </div>                                  
                                <div class="col-md-6">
                                 <label for="fecha_egreso">Fecha Check-out</label>
-                                <input type="date" class="form-control" name="fecha_egreso" id="fecha_egreso" placeholder="Ingrese fecha de egreso" required>
+                                <input type="date" class="form-control" name="fecha_egreso" id="fecha_egreso" placeholder="Ingrese fecha de egreso" oninput="ingresoEgreso(this)" required>
                               </div> 
                               <div class="col-md-6">
                                 <label for="cantidad_personas">Cantidad de personas</label>
-                                <input type="number" class="form-control" name="cantidad_personas" id="cantidad_personas" placeholder="Ingrese cantidad personas" min="1" max="8" required>
+                                <input type="number" class="form-control" name="cantidad_personas" id="cantidad_personas" placeholder="Ingrese cantidad personas" min="1" max="8" oninput="cantidad(this)" required>
                               </div>    
                               <div class="col-md-6"></div>
                               <div class="col-md-6">                                
@@ -221,7 +221,7 @@
                                      <% String res=" ";
 
                                       if(bandera == false){
-                                        res ="La habitacion no esta disponible en este rango de fechas. Intente de nuevo";
+                                        res ="LA HABITACION NO ESTA DISPONIBLE EN ESTAS FECHAS. INTENTE DE NUEVO.";
                                       }
                                       
                                       
@@ -239,7 +239,7 @@
                                 <input type="hidden" name="idHabitacionFinal" value="<%=habitacion. getId_habitacion()%>">
                                 <%  Empleado empleado = (Empleado) miSession.getAttribute("empleadoFinal");%>
                                 <input type="hidden" name="idEmpleadoFinal" value="<%=empleado.getId_persona()%>">
-                                <button type="submit" class="btn btn-success" onClick="compReserva()">Reservar</button>
+                                <button type="submit" class="btn btn-success" onClick="isEmptyCargaReserva()">Reservar</button>
                             </div>                            
                          </div>
                          </form>

@@ -327,6 +327,8 @@ public class Controladora {
                     flag = false;
                 } else if (dateIngreso.equals(reserva.getFecha_checkOut())) {
                     flag = false;
+                }else if(reserva.getFecha_checkIn().after(dateIngreso) && reserva.getFecha_checkIn().before(dateEgreso)){
+                    flag = false;
                 }
             }
 

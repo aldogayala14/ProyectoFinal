@@ -148,7 +148,7 @@
                                 <input type="hidden" name="id_empleado" value="<%=empleado.getId_persona()%>"
                               </div>                             
                               <div class="col-12 text-center">       
-                              <button type="submit" class="btn btn-primary btn-guardar">Modificar</button>
+                              <button type="submit" class="btn btn-primary btn-guardar" onclick="isEmptyCargaEmpleado()">Modificar</button>
                               </div>
                               <%}%>
                          </form>

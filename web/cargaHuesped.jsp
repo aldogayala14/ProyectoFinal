@@ -139,7 +139,7 @@
                               </div>  
                               <br> 
                               <div class="col text-center">       
-                              <button type="submit" class="btn btn-primary btn-guardar">Guardar</button>
+                              <button type="submit" class="btn btn-primary btn-guardar" onClick="isEmptyCargaHuesped()">Guardar</button>
                               </div>
                          </form>
                         

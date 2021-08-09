@@ -149,7 +149,7 @@
                                 <input type="hidden" name="id_huesped" value="<%=huesped.getId_persona()%>"
                               </div>
                               <div class="col text-center">       
-                              <button type="submit" class="btn btn-primary btn-guardar">Modificar</button>
+                              <button type="submit" class="btn btn-primary btn-guardar" onclick="isEmptyCargaHuesped()">Modificar</button>
                               </div>
                                <%}%>
                          </form>

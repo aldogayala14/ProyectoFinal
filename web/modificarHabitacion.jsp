@@ -166,7 +166,7 @@
                                 <input type="hidden" name="id_habitacion" value="<%=habitacion.getId_habitacion()%>"
                               </div>
                               <div class="col text-center">       
-                              <button type="submit" class="btn btn-primary btn-guardar">Guardar</button>
+                              <button type="submit" class="btn btn-primary btn-guardar" onclick="isEmptyCargaHabitacion()">Guardar</button>
                               </div>
                               <%}%>
                          </form>
