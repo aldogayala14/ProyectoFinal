@@ -1,11 +1,13 @@
 package Logica;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Habitacion implements Serializable {
@@ -19,18 +21,24 @@ public class Habitacion implements Serializable {
     private String tipoTematica;
     private double precioNoche;
     private String tipoHabitacion;
+    
+    @OneToMany(mappedBy = "habitacion")
+    private List<Reserva> listaReservas;
 
     public Habitacion() {
     }
 
-    public Habitacion(long id_habitacion, int numero_habitacion, int piso, String tipoTematica, double precioNoche, String tipoHabitacion) {
+    public Habitacion(long id_habitacion, int numero_habitacion, int piso, String tipoTematica, double precioNoche, String tipoHabitacion, List<Reserva> listaReservas) {
         this.id_habitacion = id_habitacion;
         this.numero_habitacion = numero_habitacion;
         this.piso = piso;
         this.tipoTematica = tipoTematica;
         this.precioNoche = precioNoche;
         this.tipoHabitacion = tipoHabitacion;
+        this.listaReservas = listaReservas;
     }
+
+   
 
     public long getId_habitacion() {
         return id_habitacion;
@@ -79,5 +87,14 @@ public class Habitacion implements Serializable {
     public void setTipoHabitacion(String tipoHabitacion) {
         this.tipoHabitacion = tipoHabitacion;
     }
+
+    public List<Reserva> getListaReservas() {
+        return listaReservas;
+    }
+
+    public void setListaReservas(List<Reserva> listaReservas) {
+        this.listaReservas = listaReservas;
+    }
+    
 
 }

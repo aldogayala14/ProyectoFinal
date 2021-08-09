@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public class Controladora {
 
     ControladoraPersistencia controlPersi = new ControladoraPersistencia();
-    ArrayList<Reserva> listaReserva = new ArrayList<Reserva>();
+    List <Reserva> listaReserva = new ArrayList();
 
     public void cargarDatos() {
 
@@ -105,6 +105,12 @@ public class Controladora {
         reserva.setEmpleado(empleado);
         reserva.setHuesped(huesped);
         reserva.setHabitacion(habitacion1);
+        
+        
+        listaReserva.add(reserva);
+        empleado.setListaReservas(listaReserva);
+        huesped.setListaReservas(listaReserva);
+        habitacion1.setListaReservas(listaReserva);
 
         controlPersi.crearReserva(reserva);
 
@@ -170,6 +176,12 @@ public class Controladora {
         reserva.setEmpleado(empl);
         reserva.setHuesped(hues);
         reserva.setHabitacion(hab);
+        
+        listaReserva.add(reserva);
+        
+        empl.setListaReservas(listaReserva);
+        hues.setListaReservas(listaReserva);
+        hab.setListaReservas(listaReserva);
 
         //Guardo mi reserva
         controlPersi.crearReserva(reserva);

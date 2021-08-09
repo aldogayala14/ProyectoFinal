@@ -118,7 +118,7 @@
                          <form action="SvHabitacion" method="POST" class="row g-3">
                              <div class="col-md-6">
                                 <label for="numero_habitacion">Numero de Habitacion</label>
-                                <input type="number"  class="form-control" name="numero_habitacion" id="numero_habitacion" placeholder="Ingrese numero habitacion" max="10000" required>           
+                                <input type="number"  class="form-control" name="numero_habitacion" id="numero_habitacion" placeholder="Ingrese numero habitacion" max="15" required>           
                               </div>
                               <div class="col-md-6">
                                 <label for="numero_piso">Numero de Piso</label>
