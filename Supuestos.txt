@@ -1,2 +1,14 @@
-Supuestos:
+	Supuestos:
+	
+	- Un empleado tiene un usuario y un usuario tiene un solo empleado.
+	- El sistema esta pensado para un hotel con un maximo de 15 pisos.
+	- Solo se permiten 15 habitaciones por piso.
+	- Un empleado puede registrar la reserva de un cliente de a 1 habitacion a la vez (No puede reservar muchas habitaciones en la misma operación).
+	- La capacidad maxima de personas por habitacion es de 8 personas.
+	- La fecha de egreso (check-out) nunca puede ser inferior a la fecha de ingreso (check-in).
+	- El total de la operacion a la hora de realizar una reserva se calcula en base a la cantidad de noches desde un dia hasta otro dia por el valor de la habitacion.
+	- Si un empleado da de baja a un empleado, habitacion o huesped. Primero debe eliminar sus reservas. (Borrado logico).
+	- El sistema emite un comprobante de reserva X (No valido como factura).
+	- La reserva solo se puede modificar las fechas de ingreso, fecha de egreso, cantidad personas y observaciones. Si desea cambiar la habitacion hay que generar una nueva reserva.
+
 
